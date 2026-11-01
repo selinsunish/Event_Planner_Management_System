@@ -1,7 +1,7 @@
 import uuid
 import json
 import logging
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Dict, Any, Optional
 
 from schemas import (
@@ -39,7 +39,7 @@ def generate_ai_event_blueprint(event: EventCreateRequest) -> EventPlanResponse:
     guests = int(event.guestCount)
     sym = CURRENCY_SYMBOLS.get(event.currency, "$")
     cost_per_guest = round(budget / max(guests, 1), 2)
-    created_at = datetime.utcnow().isoformat() + "Z"
+    created_at = datetime.now(timezone.utc).isoformat()
 
     # 1. Attempt Gemini Generation
     client = get_gemini_client()

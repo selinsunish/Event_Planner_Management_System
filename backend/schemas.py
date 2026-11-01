@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field, field_validator
 from typing import Optional, List, Literal
 
 class EventCreateRequest(BaseModel):
@@ -15,14 +15,16 @@ class EventCreateRequest(BaseModel):
     decorationPreferences: Optional[str] = Field(default="", max_length=500)
     additionalRequirements: Optional[str] = Field(default="", max_length=500)
 
-    @validator("eventName")
+    @field_validator("eventName")
+    @classmethod
     def validate_name_not_blank(cls, v: str) -> str:
         trimmed = v.strip()
         if not trimmed:
             raise ValueError("Event name cannot be blank.")
         return trimmed
 
-    @validator("eventLocation")
+    @field_validator("eventLocation")
+    @classmethod
     def validate_location_not_blank(cls, v: str) -> str:
         trimmed = v.strip()
         if not trimmed:

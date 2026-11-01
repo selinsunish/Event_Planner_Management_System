@@ -66,7 +66,7 @@ export default function App() {
         onGoHome={() => setCurrentView('home')} 
       />
 
-      <main style={{
+      <main id="main-content" tabIndex="-1" style={{
         maxWidth: '1440px',
         margin: '0 auto',
         padding: '2.5rem',
